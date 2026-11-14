@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kiến Quốc — Thám Tử Nhí (Detective Mission) · Unit 4 My Neighbourhood</title>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Nunito',sans-serif;background:linear-gradient(180deg,#081120 0%,#0C1D33 55%,#12283F 100%);color:#E9F0F8;padding:22px 14px 70px;min-height:100vh}
+  .wrap{max-width:880px;margin:0 auto}
+  header{text-align:center;padding:30px 18px 24px;background:linear-gradient(135deg,#0A1830,#14304F 60%,#1D4066);color:#fff;border-radius:22px;box-shadow:0 14px 30px rgba(0,0,0,.45);border:2px solid #C9A227}
+  header .badge{display:inline-block;background:#C9A227;color:#0A1830;font-weight:800;padding:5px 16px;border-radius:999px;font-size:13px;letter-spacing:1.2px}
+  header h1{font-family:'Baloo 2',cursive;font-size:clamp(26px,5.4vw,40px);margin:12px 0 6px;line-height:1.15;color:#FFD94D}
+  header p{color:#C7D8EA;font-size:16px}
+  .card{background:#FFFDF4;color:#14273C;border-radius:18px;box-shadow:0 4px 10px rgba(0,0,0,.25),0 14px 30px rgba(0,0,0,.35);padding:22px;margin-top:18px;border-top:6px solid #14304F}
+  .card.gold{border-top-color:#C9A227}
+  h2{font-family:'Baloo 2',cursive;font-size:24px;color:#0E2A47;margin-bottom:6px}
+  .sub{color:#55677C;font-size:15.5px;line-height:1.5}
+  input[type=text]{width:100%;padding:13px 15px;font-size:17px;border:2px solid #D8DEE6;border-radius:12px;margin:8px 0 10px;font-family:inherit;background:#fff;color:#14273C}
+  input[type=text]:focus{outline:none;border-color:#C9A227}
+  .btn{background:#0E2A47;color:#fff;border:none;padding:13px 30px;border-radius:999px;font-size:17px;font-weight:800;cursor:pointer;font-family:inherit;box-shadow:0 6px 14px rgba(0,0,0,.3)}
+  .btn:hover{background:#16406B}
+  .btn.teal{background:#0E7C86}.btn.teal:hover{background:#0A626B}
+  .btn.gold{background:#C9A227;color:#0A1830}.btn.gold:hover{background:#B08E1F}
+  .btn.small{padding:9px 22px;font-size:15px}
+  /* flashcards */
+  .fc-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;margin-top:14px}
+  .fc{perspective:700px;height:172px;cursor:pointer}
+  .fc-inner{position:relative;width:100%;height:100%;transition:transform .55s;transform-style:preserve-3d}
+  .fc.flipped .fc-inner{transform:rotateY(180deg)}
+  .fc-face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:12px;text-align:center;box-shadow:0 6px 16px rgba(0,0,0,.3)}
+  .fc-front{background:linear-gradient(160deg,#FDF6DC,#F7EBC0);border:2px dashed #C9A227}
+  .fc-front .em{font-size:52px}
+  .fc-front .hint{font-size:12.5px;color:#8A6D1F;font-weight:800;margin-top:6px;letter-spacing:.6px}
+  .fc-back{background:linear-gradient(160deg,#0A1830,#1D4066);color:#fff;transform:rotateY(180deg)}
+  .fc-back .w{font-family:'Baloo 2',cursive;font-size:21px;color:#FFD94D}
+  .fc-back .ipa{font-size:14px;color:#9FD8D2}
+  .fc-back .vn{font-size:15px;font-weight:800;margin-top:3px}
+  .fc-back .ex{font-size:13px;color:#DCEBF5;margin-top:6px;line-height:1.4;font-style:italic}
+  .speak{margin-top:8px;background:#C9A227;border:none;border-radius:999px;padding:5px 14px;font-weight:800;cursor:pointer;font-size:14px;color:#0A1830}
+  /* missions */
+  .mission-head{display:flex;align-items:center;gap:12px;margin-top:30px}
+  .mission-head .ic{font-size:34px;background:#C9A227;border-radius:50%;width:58px;height:58px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px rgba(0,0,0,.4)}
+  .mission-head h2{font-size:24px;color:#FFD94D}
+  .mission-head p{color:#A9C3DE;font-size:14.5px;font-weight:700}
+  .clue{background:#FFF3D6;border-left:6px solid #C9A227;border-radius:12px;padding:15px 18px;font-size:16.5px;line-height:1.65;color:#3A2E12;box-shadow:0 8px 20px rgba(0,0,0,.35);margin-top:14px}
+  .q{font-size:17.5px;font-weight:700;line-height:1.45;margin-bottom:6px}
+  .passage{background:#F2F9F6;border-left:5px solid #0E7C86;border-radius:10px;padding:13px 16px;font-size:16px;line-height:1.6;margin-bottom:12px;color:#173F57}
+  .opts label{display:block;padding:11px 15px;border:2px solid #E1E9E6;border-radius:12px;margin:8px 0;cursor:pointer;font-size:16.5px;transition:.15s;background:#FDFEFE}
+  .opts label:hover{border-color:#0E7C86;background:#F0FAF7}
+  .opts input{margin-right:9px;transform:scale(1.2)}
+  .opts label.correct{border-color:#1E9E6A;background:#E7F7EF}
+  .opts label.wrong{border-color:#D64545;background:#FDECEC}
+  .explain{display:none;margin-top:12px;background:#EFF6FF;border:1px solid #BFDBFE;color:#1E40AF;border-radius:10px;padding:11px 14px;font-size:15.5px;line-height:1.55}
+  .feedback{font-weight:800;margin-top:9px;font-size:16px;min-height:20px}
+  .ok{color:#1E9E6A}.no{color:#D64545}
+  .gaprow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+  .gaprow input{flex:1;min-width:180px;margin:4px 0}
+  .progress{text-align:center;font-weight:800;color:#FFD94D;margin-top:22px;font-size:17px}
+  #mainArea{display:none}
+  #report{display:none;text-align:center}
+  #report .score{font-family:'Baloo 2',cursive;font-size:52px;font-weight:800;color:#0E2A47}
+  .per{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0}
+  .per span{background:#FDF6DC;border:2px solid #E3CE8F;border-radius:999px;padding:6px 14px;font-weight:800;font-size:14.5px}
+  .code{font-family:ui-monospace,monospace;background:#0A1830;color:#FFD94D;padding:10px 14px;border-radius:10px;font-size:14.5px;display:inline-block;margin-top:8px;word-break:break-all;max-width:100%}
+  .small{font-size:14px;color:#55677C;margin-top:10px;line-height:1.55}
+  footer{text-align:center;color:#9FB4CC;font-size:14.5px;margin-top:36px;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <span class="badge">🔍 DETECTIVE MISSION · UNIT 4: MY NEIGHBOURHOOD 🔍</span>
+    <h1>KIẾN QUỐC — THÁM TỬ NHÍ</h1>
+    <p>Global Success 6 · Unit 4 My Neighbourhood · 10 Flashcards + 10 Clues + 100 câu hỏi · Tìm chú chó Bibo bị lạc!</p>
+  </header>
+
+  <div class="card" id="startCard">
+    <h2>🚨 Vụ án: Chú chó Bibo bị lạc!</h2>
+    <p class="sub">Tin khẩn: <b>Bibo</b> — chú chó nhỏ màu nâu của cô Lan — đã bị lạc trong khu phố! 🐶 Em chính là <b>thám tử nhí</b>: hãy lần theo dấu chân qua <b>10 địa điểm</b> (thư viện → chợ → nhà ga → quảng trường → bưu điện → tiệm bánh → phòng tranh → nhà thờ &amp; hiệu sách → bến xe buýt → manh mối cuối cùng), trả lời <b>100 câu hỏi</b> để thu thập đủ manh mối và tìm thấy Bibo. Mỗi câu hỏi có nút <b>Check</b> riêng kèm giải thích — sai cũng không sao, đọc giải thích là nhớ luôn nhé! 🔎</p>
+    <input type="text" id="studentName" value="Kiến Quốc">
+    <button class="btn teal" onclick="startGame()">🔍 Start — Bắt đầu phá án!</button>
+    <p class="small">Có <b>mã khôi phục</b> từ lần chơi trước? Dán mã vào ô dưới rồi bấm Restore để chơi tiếp đúng chỗ cũ:<br>
+    <input type="text" id="restoreCode" placeholder="Recovery code (KQD1-...)">
+    <button class="btn small gold" onclick="restoreGame()">Restore</button></p>
+  </div>
+
+  <div id="mainArea">
+    <div class="card gold">
+      <h2>🃏 Flashcards — Sổ tay thám tử: từ vựng Unit 4</h2>
+      <p class="sub">Bấm vào từng thẻ để lật xem từ vựng khu phố. Bấm 🔊 để nghe phát âm giọng Anh-Anh.</p>
+      <div class="fc-grid" id="fcGrid"></div>
+    </div>
+
+    <div id="missions"></div>
+
+    <p class="progress" id="progressLine">Đã kiểm tra: 0 / 100 câu 🔍</p>
+
+    <div class="card gold" id="report">
+      <h2>🏆 CASE CLOSED — PHÁ ÁN THÀNH CÔNG!</h2>
+      <p style="font-size:18px;margin-top:4px" id="reportName"></p>
+      <div class="score" id="reportScore"></div>
+      <div class="per" id="reportPer"></div>
+      <p id="reportMsg" style="font-size:16.5px;line-height:1.55"></p>
+      <p class="small">Chụp màn hình báo cáo này gửi cho cô giáo nhé! 📸<br>Mã khôi phục tiến độ (lần sau dán vào ô Restore ở màn hình đầu để chơi tiếp):</p>
+      <div class="code" id="reportCode"></div>
+    </div>
+  </div>
+
+  <footer>✍️ Created by Mrs. Thanh Giang — Giáo viên tiếng Anh, Trường THPT Chuyên Thoại Ngọc Hầu, tỉnh An Giang</footer>
+</div>
+
+<script>
+var DATA = {"flashcards": [{"unit": "Unit 4", "emoji": "⛲", "word": "square", "ipa": "/skweə(r)/", "vn": "quảng trường", "ex": "Children play football in the square every afternoon."}, {"unit": "Unit 4", "emoji": "⛪", "word": "cathedral", "ipa": "/kəˈθiːdrəl/", "vn": "nhà thờ lớn", "ex": "The old cathedral is the tallest building in our town."}, {"unit": "Unit 4", "emoji": "🚉", "word": "railway station", "ipa": "/ˈreɪlweɪ ˌsteɪʃn/", "vn": "ga xe lửa", "ex": "My uncle works at the railway station."}, {"unit": "Unit 4", "emoji": "🖼️", "word": "art gallery", "ipa": "/ˈɑːt ˌɡæləri/", "vn": "phòng trưng bày nghệ thuật", "ex": "There are many beautiful paintings in the art gallery."}, {"unit": "Unit 4", "emoji": "🥖", "word": "bakery", "ipa": "/ˈbeɪkəri/", "vn": "tiệm bánh mì", "ex": "The bakery near my house smells wonderful in the morning."}, {"unit": "Unit 4", "emoji": "↔️", "word": "opposite", "ipa": "/ˈɒpəzɪt/", "vn": "đối diện", "ex": "The bank is opposite the post office."}, {"unit": "Unit 4", "emoji": "👥", "word": "crowded", "ipa": "/ˈkraʊdɪd/", "vn": "đông đúc", "ex": "The market is crowded on Sunday mornings."}, {"unit": "Unit 4", "emoji": "🌿", "word": "peaceful", "ipa": "/ˈpiːsfl/", "vn": "yên bình, thanh bình", "ex": "This small park is quiet and peaceful."}, {"unit": "Unit 4", "emoji": "🏢", "word": "modern", "ipa": "/ˈmɒdn/", "vn": "hiện đại", "ex": "Our new library is big and modern."}, {"unit": "Unit 4", "emoji": "✅", "word": "convenient", "ipa": "/kənˈviːniənt/", "vn": "thuận tiện", "ex": "Living near the school is very convenient."}], "missions": [{"n": 1, "unit": "Clue 1 · At the Library", "emoji": "📚", "passage": "🔎 CLUE 1 — THE LIBRARY. Detective Quốc walks into the Green Street Library. Mrs Hoa, the librarian, says: 'A little brown dog was here this morning! He slept under a chair near the window. Then he took my red ball and ran out of the door!' On the floor, Quốc sees tiny wet paw prints... and something funny: the dog's library card! It says: 'Bibo — loves stories and bananas.'", "qs": [{"type": "mcq", "q": "Who is Mrs Hoa?", "options": ["A teacher", "The librarian", "A policewoman", "A banana seller"], "answer": 1, "explain": "Ngay đầu đoạn, Mrs Hoa được giới thiệu là 'the librarian' — cô thủ thư của thư viện."}, {"type": "mcq", "q": "Where did Bibo sleep in the library?", "options": ["Under a chair near the window", "On the librarian's desk", "Behind a big bookshelf", "In the reading room"], "answer": 0, "explain": "Mrs Hoa kể: 'He slept under a chair near the window' — Bibo ngủ dưới một chiếc ghế gần cửa sổ."}, {"type": "mcq", "q": "What did Bibo take from the library?", "options": ["A banana", "A book", "A red ball", "A library card"], "answer": 2, "explain": "'He took my red ball and ran out of the door!' — Bibo tha quả bóng đỏ rồi chạy ra ngoài."}, {"type": "mcq", "q": "Bibo's library card says he loves ______.", "options": ["stories and milk", "bones and balls", "bananas and bones", "stories and bananas"], "answer": 3, "explain": "Trên thẻ thư viện ghi: 'Bibo — loves stories and bananas' — Bibo yêu truyện và chuối."}, {"type": "mcq", "q": "The paw prints on the floor are wet. This tells Detective Quốc that Bibo ______.", "options": ["likes swimming in the river", "came in from the wet street", "is a very clean dog", "sleeps in the bathroom"], "answer": 1, "explain": "Dấu chân ƯỚT (wet paw prints) cho thấy Bibo vừa từ con đường ướt ở ngoài chạy vào. Đây là suy luận của thám tử đấy!"}, {"type": "gap", "q": "The library in the story is on ______ Street.", "answer": "Green", "accept": ["green"], "explain": "Tên thư viện là 'the Green Street Library' nên đáp án là Green."}, {"type": "mcq", "q": "In 'tiny wet paw prints', the word 'tiny' means ______.", "options": ["very wet", "very big", "very small", "very fast"], "answer": 2, "explain": "Tiny = rất nhỏ, tí hon. Dấu chân của Bibo nhỏ xíu vì Bibo là một chú chó nhỏ."}, {"type": "mcq", "q": "What is Detective Quốc's next job?", "options": ["Follow the paw prints", "Read a book about dogs", "Buy a new ball for Mrs Hoa", "Clean the floor of the library"], "answer": 0, "explain": "Thám tử phải lần theo dấu chân (follow the paw prints) để tìm Bibo — manh mối đang dẫn tới khu chợ!"}, {"type": "mcq", "q": "Mrs Hoa says Bibo 'ran out of the door'. This means Bibo ______.", "options": ["walked slowly into the library", "left the library quickly", "slept near the door", "came back into the library"], "answer": 1, "explain": "'Run out of the door' = chạy vụt ra khỏi cửa. Bibo chạy ra ngoài rất nhanh sau khi tha quả bóng đỏ."}, {"type": "gap", "q": "Detective Quốc finds Bibo's library card on the ______.", "answer": "floor", "accept": ["floor"], "explain": "Đoạn văn nói: 'On the floor, Quốc sees tiny wet paw prints... and the dog's library card!' → thẻ thư viện nằm trên SÀN (floor)."}]}, {"n": 2, "unit": "Clue 2 · At the Market", "emoji": "🍌", "passage": "🔎 CLUE 2 — THE MARKET. The market is busy and noisy in the morning. Mr Tuan, the banana seller, laughs loudly: 'That funny little dog! He took a banana, ate it in one minute, and ran to that tall building over there!' Quốc looks at Mr Tuan's bananas. They are cheap and fresh. But wait — on the road there is a yellow banana skin... and more tiny paw prints next to it!", "qs": [{"type": "mcq", "q": "How is the market in the morning?", "options": ["Quiet and peaceful", "Busy and noisy", "Small and boring", "Dark and empty"], "answer": 1, "explain": "Đoạn văn mở đầu: 'The market is busy and noisy in the morning' — khu chợ bận rộn và ồn ào vào buổi sáng."}, {"type": "mcq", "q": "What did Bibo eat at the market?", "options": ["A banana", "An apple", "A sandwich", "A hot dog"], "answer": 0, "explain": "Mr Tuan kể Bibo lấy một quả chuối và ăn hết trong một phút: 'He took a banana, ate it in one minute.'"}, {"type": "mcq", "q": "Mr Tuan's bananas are ______.", "options": ["expensive and old", "big and expensive", "cheap and fresh", "small and dry"], "answer": 2, "explain": "Đoạn văn nói rõ: 'They are cheap and fresh' — chuối của ông Tuấn vừa rẻ vừa tươi."}, {"type": "mcq", "q": "Which sentence is TRUE?", "options": ["Bibo hates bananas", "Bibo slept at the market", "Mr Tuan is very angry with Bibo", "Bibo ran to a tall building"], "answer": 3, "explain": "Mr Tuan cười lớn (laughs) chứ không hề giận; ông kể Bibo chạy về phía tòa nhà cao tầng: 'ran to that tall building over there'."}, {"type": "mcq", "q": "The market is ______ than the library.", "options": ["quieter", "noisier", "more peaceful", "smaller"], "answer": 1, "explain": "Chợ 'busy and noisy', thư viện thì yên tĩnh → chợ ỒN hơn: noisier. Tính từ ngắn noisy → noisier (đổi y thành i rồi thêm -er)."}, {"type": "gap", "q": "There is a yellow banana ______ on the road, next to the paw prints.", "answer": "skin", "accept": ["skin"], "explain": "Banana skin là VỎ chuối. Bibo ăn chuối xong vứt vỏ lại bên đường — thêm một manh mối!"}, {"type": "mcq", "q": "Mr Tuan laughs a lot. He is a ______ man.", "options": ["angry", "serious", "cheerful", "tired"], "answer": 2, "explain": "Laughs (cười) → cheerful = vui vẻ, tươi cười. Serious = nghiêm túc, angry = tức giận, tired = mệt."}, {"type": "mcq", "q": "You can buy fresh fruit and vegetables at the ______.", "options": ["market", "library", "cathedral", "railway station"], "answer": 0, "explain": "Market là chợ — nơi bán trái cây và rau củ tươi. Cathedral = nhà thờ lớn, railway station = ga xe lửa."}, {"type": "mcq", "q": "Detective Quốc thinks: 'The library is ______ than the market in the morning.'", "options": ["busier", "noisier", "quieter", "more crowded"], "answer": 2, "explain": "Thư viện là nơi yên tĩnh, chợ thì 'busy and noisy' → thư viện yên tĩnh hơn: quieter (tính từ ngắn quiet → quieter)."}, {"type": "mcq", "q": "______ sells bananas at the market.", "options": ["Mrs Hoa", "The old woman", "A train driver", "Mr Tuan"], "answer": 3, "explain": "Người bán chuối ở chợ là Mr Tuan — 'the banana seller'. Mrs Hoa là thủ thư ở thư viện."}]}, {"n": 3, "unit": "Clue 3 · At the Railway Station", "emoji": "🚉", "passage": "🔎 CLUE 3 — THE RAILWAY STATION. Choo choo! Trains come and go all morning. Three people at the station saw Bibo today. Detective Quốc opens his notebook and smiles: 'Please tell me everything!' Listen to each witness carefully — then answer the questions.", "qs": [{"type": "mcq", "listen": "I work at the ticket office. This morning, a little brown dog ran past my window. He went under the bridge and then stopped near the river.", "q": "🎧 Listen to Witness 1. Where did Bibo stop?", "options": ["Near the river", "At the ticket office", "On a train", "In the station café"], "answer": 0, "explain": "Nhân chứng 1 nói: 'He went under the bridge and then stopped near the river' — Bibo dừng lại gần con sông."}, {"type": "mcq", "listen": "I sell coffee at the station café. This morning, the little dog was opposite my café. He was very thirsty, so I gave him a big bowl of water.", "q": "🎧 Listen to Witness 2. Why did the woman give Bibo water?", "options": ["Because he was hungry", "Because he was thirsty", "Because he was dirty", "Because he was cold"], "answer": 1, "explain": "'He was very thirsty, so I gave him a big bowl of water' — Bibo khát nước nên cô bán cà phê cho cậu một bát nước to."}, {"type": "mcq", "listen": "I am a train driver. That dog is very small. He is smaller than my cat! He ran between two buses and then crossed the street to the bookshop.", "q": "🎧 Listen to Witness 3. The dog is smaller than ______.", "options": ["a bus", "a train", "the driver's cat", "the bookshop"], "answer": 2, "explain": "Bác tài xế tàu nói: 'He is smaller than my cat!' — Bibo còn nhỏ hơn cả con mèo của bác!"}, {"type": "mcq", "q": "Go ______ ahead. The park is on your left.", "options": ["past", "along", "through", "straight"], "answer": 3, "explain": "'Go straight ahead' = đi thẳng về phía trước — cụm cố định khi chỉ đường."}, {"type": "mcq", "q": "______ the first turning on the right. The bookshop is there.", "options": ["Do", "Take", "Make", "Have"], "answer": 1, "explain": "Chỉ đường dùng 'Take the first turning' = rẽ ở ngã rẽ đầu tiên."}, {"type": "mcq", "q": "The café is ______ the station and the bookshop.", "options": ["under", "on", "between", "behind"], "answer": 2, "explain": "Nằm giữa HAI địa điểm (the station AND the bookshop) thì dùng between."}, {"type": "gap", "q": "The station café is ______ the ticket office. They face each other.", "answer": "opposite", "accept": ["opposite"], "explain": "'They face each other' (chúng đối mặt với nhau) → opposite = đối diện."}, {"type": "mcq", "q": "Read the directions: 'Walk out of the station, turn left, then go under the bridge.' What is the correct order?", "options": ["Out of the station → turn left → under the bridge", "Turn left → out of the station → under the bridge", "Under the bridge → turn left → out of the station", "Out of the station → under the bridge → turn right"], "answer": 0, "explain": "Đọc và làm theo đúng thứ tự các bước: ra khỏi ga → rẽ trái → đi qua dưới cầu."}, {"type": "mcq", "q": "From the station, walk along the river and ______ left at the bridge.", "options": ["take", "turn", "make", "do"], "answer": 1, "explain": "Chỉ đường: 'turn left' = rẽ trái. Đi dọc con sông rồi rẽ trái ở cây cầu nhé!"}, {"type": "gap", "q": "Trains come and go at the railway ______.", "answer": "station", "accept": ["station"], "explain": "Railway station = nhà ga xe lửa — nơi tàu đến và đi suốt buổi sáng."}]}, {"n": 4, "unit": "Clue 4 · At the Square", "emoji": "⛲", "passage": "🔎 CLUE 4 — THE SQUARE. The square is big and peaceful — quieter than the market and more beautiful than the station. An old woman feeds the birds here every day. She points to the fountain and smiles: 'Your little dog drank water from the fountain and played with the children!' Detective Quốc looks around the square and writes his deductions in his notebook. Help him finish them!", "qs": [{"type": "mcq", "q": "Deduction 1: ______ a fountain in the middle of the square.", "options": ["There are", "Are there", "There is", "Is there"], "answer": 2, "explain": "Đây là câu KỂ (không phải câu hỏi) với danh từ số ít 'a fountain' → There is."}, {"type": "mcq", "q": "Deduction 2: ______ any dogs in the square now?", "options": ["Are there", "Is there", "There is", "There are"], "answer": 0, "explain": "Câu hỏi với danh từ số nhiều 'dogs' → Are there...? (Are there any dogs...?)"}, {"type": "mcq", "q": "Deduction 3: The square is ______ than the market.", "options": ["more quiet", "quietest", "quiet", "quieter"], "answer": 3, "explain": "So sánh hơn của tính từ ngắn 'quiet' → quieter. Không dùng 'more quiet' với tính từ ngắn."}, {"type": "mcq", "q": "Deduction 4: The market is ______ than the square. There are hundreds of people there!", "options": ["crowdeder", "more crowded", "crowdedest", "crowded"], "answer": 1, "explain": "'Crowded' là tính từ dài → so sánh hơn dùng 'more crowded'. Hàng trăm người ở chợ nên chợ đông đúc hơn quảng trường."}, {"type": "mcq", "q": "Deduction 5: The fountain is ______ the square, right in the centre.", "options": ["under", "behind", "in the middle of", "next to"], "answer": 2, "explain": "'Right in the centre' (ngay chính giữa) → đài phun nước nằm 'in the middle of' quảng trường."}, {"type": "gap", "q": "Deduction 6: ______ there a café near the square? — Yes, there is.", "answer": "Is", "accept": ["is"], "explain": "Câu hỏi với danh từ số ít 'a café', và câu trả lời là 'Yes, there is' → điền Is: 'Is there a café near the square?'"}, {"type": "mcq", "q": "Deduction 7: The new shopping centre is ______ than the old market.", "options": ["more modern", "moderner", "most modern", "modern"], "answer": 0, "explain": "'Modern' là tính từ dài (2 âm tiết, trọng âm đầu) → so sánh hơn: more modern."}, {"type": "mcq", "q": "Deduction 8: The old woman sits ______ the fountain and the big tree every day.", "options": ["in front of", "between", "under", "behind"], "answer": 1, "explain": "Ngồi giữa HAI vật (the fountain AND the big tree) → between."}, {"type": "gap", "q": "Deduction 9: There ______ a big tree next to the fountain in the square.", "answer": "is", "accept": ["is"], "explain": "'A big tree' là danh từ số ít → There is. Câu đầy đủ: There is a big tree next to the fountain."}, {"type": "mcq", "q": "Deduction 10: ______ there any children in the square? — Yes, there are. They are playing near the fountain!", "options": ["Is", "Are", "Do", "Does"], "answer": 1, "explain": "'Children' là danh từ số nhiều, và câu trả lời là 'Yes, there are' → câu hỏi phải là Are there...?"}]}, {"n": 5, "unit": "Clue 5 · At the Post Office", "emoji": "📮", "passage": "🔎 CLUE 5 — THE POST OFFICE. The post office is next to the library. Mrs Lan, the postwoman, is sorting letters. She says: 'This morning a little dog ran past my bicycle with a red ball! He dropped this near the door.' She gives Quốc a small, muddy envelope. On the envelope there is a picture of a bone and the words: 'For Bibo, the best dog.' A new clue!", "qs": [{"type": "mcq", "q": "Where is the post office?", "options": ["Opposite the market", "Behind the station", "Next to the library", "Under the bridge"], "answer": 2, "explain": "Ngay câu đầu của manh mối: 'The post office is next to the library' — bưu điện nằm cạnh thư viện."}, {"type": "mcq", "q": "What is Mrs Lan's job?", "options": ["She is a postwoman", "She is a librarian", "She drives trains", "She sells coffee"], "answer": 0, "explain": "Mrs Lan là 'the postwoman' — cô đưa thư ở bưu điện. Librarian là thủ thư (Mrs Hoa)."}, {"type": "mcq", "q": "What did Bibo drop near the door of the post office?", "options": ["A red ball", "A banana skin", "A library card", "A small, muddy envelope"], "answer": 3, "explain": "Bibo đánh rơi một phong bì nhỏ dính bùn: 'He dropped this near the door' — và Mrs Lan đưa nó cho Quốc."}, {"type": "mcq", "q": "The words on the envelope are: 'For Bibo, the ______ dog.'", "options": ["best", "worst", "biggest", "smallest"], "answer": 0, "explain": "Trên phong bì ghi: 'For Bibo, the best dog' — dành cho Bibo, chú chó tuyệt nhất!"}, {"type": "gap", "q": "Mrs Lan rides a ______ to deliver letters around the neighbourhood.", "answer": "bicycle", "accept": ["bicycle", "bike"], "explain": "Mrs Lan nói Bibo 'ran past my bicycle' — cô đi XE ĐẠP (bicycle) để đưa thư."}, {"type": "mcq", "q": "______ there a post office on Green Street? — Yes, there is.", "options": ["Are", "Do", "Is", "Does"], "answer": 2, "explain": "Câu hỏi với danh từ số ít 'a post office', đáp án 'Yes, there is' → Is there...?"}, {"type": "mcq", "q": "Only ten people work at the post office. It is ______ than the library.", "options": ["more small", "smallest", "small", "smaller"], "answer": 3, "explain": "So sánh hơn của tính từ ngắn 'small' → smaller. Chỉ 10 người làm việc nên bưu điện nhỏ hơn thư viện."}, {"type": "mcq", "q": "Bibo dropped the envelope ______ the door, so Mrs Lan found it quickly.", "options": ["between", "near", "in the middle of", "under"], "answer": 1, "explain": "Phong bì rơi GẦN cửa (near the door) nên Mrs Lan nhìn thấy ngay. Between cần có 2 vật đi với 'and'; in the middle of là ở chính giữa."}, {"type": "mcq", "q": "You go to the post office to ______.", "options": ["send letters and parcels", "borrow books", "catch a train", "buy bread"], "answer": 0, "explain": "Đến bưu điện là để GỬI THƯ VÀ BƯU PHẨM (send letters and parcels). Mượn sách ở library, bắt tàu ở railway station, mua bánh ở bakery."}, {"type": "mcq", "q": "The envelope is muddy. This tells Detective Quốc that ______.", "options": ["it is very new", "it was on the wet ground", "Mrs Lan washed it", "Bibo ate it"], "answer": 1, "explain": "Phong bì DÍNH BÙN (muddy) nghĩa là nó đã nằm trên mặt đất ướt — suy luận thám tử: Bibo đánh rơi nó ngoài đường!"}]}, {"n": 6, "unit": "Clue 6 · At the Bakery", "emoji": "🥖", "passage": "🔎 CLUE 6 — THE BAKERY. The bakery is opposite the post office, and it smells wonderful! Mr Bao, the baker, is putting hot bread on the shelves. He laughs: 'Your dog came in at seven o'clock. He didn't eat my bread — he just watched the cakes and wagged his tail! Then he ran out, past the flower shop.' On the floor near the door, Quốc finds tiny white paw prints — made of flour!", "qs": [{"type": "mcq", "q": "Where is the bakery?", "options": ["Opposite the post office", "Behind the cathedral", "In the middle of the square", "Next to the railway station"], "answer": 0, "explain": "Manh mối viết rõ: 'The bakery is opposite the post office' — tiệm bánh đối diện bưu điện."}, {"type": "mcq", "q": "When did Bibo come into the bakery?", "options": ["At six o'clock", "At nine o'clock", "At twelve o'clock", "At seven o'clock"], "answer": 3, "explain": "Mr Bao kể: 'Your dog came in at seven o'clock' — Bibo vào tiệm lúc 7 giờ."}, {"type": "mcq", "q": "What did Bibo do in the bakery?", "options": ["He ate three big cakes", "He slept on the hot bread", "He watched the cakes and wagged his tail", "He took a loaf of bread home"], "answer": 2, "explain": "Bibo KHÔNG ăn bánh: 'He didn't eat my bread — he just watched the cakes and wagged his tail!' (ngắm bánh và vẫy đuôi)."}, {"type": "gap", "q": "The tiny white paw prints on the bakery floor are made of ______.", "answer": "flour", "accept": ["flour"], "explain": "Dấu chân trắng làm từ BỘT MÌ (flour) — bột làm bánh bay khắp sàn tiệm bánh đấy."}, {"type": "mcq", "q": "Mr Bao works at the bakery. He is a ______.", "options": ["driver", "librarian", "postman", "baker"], "answer": 3, "explain": "Người làm bánh và bán bánh gọi là baker. Mr Bao chính là baker của tiệm."}, {"type": "mcq", "q": "Five cakes at the bakery cost 50,000 dong. They are ______ than the bananas at the market.", "options": ["cheaper", "more expensive", "smaller", "quieter"], "answer": 1, "explain": "5 cái bánh giá 50.000 đồng, đắt hơn chuối ở chợ nhiều → more expensive (tính từ dài expensive → more expensive)."}, {"type": "mcq", "q": "______ any cakes in the bakery now? — Yes, there are lots on the shelves!", "options": ["Is there", "Are there", "There is", "There are"], "answer": 1, "explain": "'Cakes' là danh từ số nhiều → Are there any cakes...? — Yes, there are."}, {"type": "mcq", "q": "'Go ______ the flower shop and then turn left,' Mr Bao tells Quốc.", "options": ["past", "through", "under", "between"], "answer": 0, "explain": "'Go past' = đi ngang qua. Đi qua tiệm hoa rồi rẽ trái — between cần hai địa điểm nối bằng 'and'."}, {"type": "mcq", "q": "The bakery 'smells wonderful'. The word 'wonderful' means ______.", "options": ["very noisy", "very bad", "very cold", "very good"], "answer": 3, "explain": "Wonderful = tuyệt vời, rất tốt. Mùi bánh nóng thơm phức nên 'smells wonderful'."}, {"type": "mcq", "q": "Which sentence is TRUE?", "options": ["Bibo ate Mr Bao's hot bread", "Mr Bao is very angry with Bibo", "Bibo ran out, past the flower shop", "The bakery is behind the post office"], "answer": 2, "explain": "Đúng: 'Then he ran out, past the flower shop.' Mr Bao cười vui vẻ, không hề giận; tiệm bánh ĐỐI DIỆN (opposite) bưu điện chứ không phải phía sau (behind)."}]}, {"n": 7, "unit": "Clue 7 · At the Art Gallery", "emoji": "🖼️", "passage": "🔎 CLUE 7 — THE ART GALLERY. The art gallery is between the bakery and the museum, and it is quieter than the market. Miss Linh, the guide, whispers: 'A small dog walked in this morning. He stopped in front of our biggest painting — a picture of a happy dog in a green park! He looked at it for five minutes, then he walked slowly to the door.' Quốc looks at the painting: green grass, a big tree, and a happy dog. Interesting... very interesting!", "qs": [{"type": "mcq", "q": "Where is the art gallery?", "options": ["Opposite the railway station", "Between the bakery and the museum", "Next to the post office", "Behind the market"], "answer": 1, "explain": "'The art gallery is between the bakery and the museum' — nằm giữa tiệm bánh và bảo tàng → between."}, {"type": "mcq", "q": "The art gallery is ______ than the market.", "options": ["noisier", "busier", "quieter", "more crowded"], "answer": 2, "explain": "Phòng tranh 'quieter than the market' — yên tĩnh hơn chợ. Ở phòng tranh, mọi người phải nói khẽ!"}, {"type": "mcq", "q": "In the biggest painting, Quốc sees a ______ in a green park.", "options": ["bird", "cat", "fish", "happy dog"], "answer": 3, "explain": "Bức tranh lớn nhất vẽ 'a happy dog in a green park' — một chú chó vui vẻ trong công viên xanh."}, {"type": "mcq", "q": "How long did Bibo look at the big painting?", "options": ["One minute", "Three minutes", "Five minutes", "Ten minutes"], "answer": 2, "explain": "'He looked at it for five minutes' — Bibo ngắm bức tranh tận 5 phút. Chắc cậu nhớ công viên lắm!"}, {"type": "gap", "q": "Miss Linh works at the art gallery. She is the ______.", "answer": "guide", "accept": ["guide"], "explain": "Miss Linh là người hướng dẫn (guide) ở phòng tranh — đoạn văn giới thiệu cô là 'the guide'."}, {"type": "mcq", "q": "______ a big tree in the painting of the park.", "options": ["Are there", "There is", "There are", "Is there"], "answer": 1, "explain": "Đây là câu KỂ với danh từ số ít 'a big tree' → There is."}, {"type": "mcq", "q": "The painting of the dog is two metres tall. It is ______ than the other paintings in the room.", "options": ["quieter", "smaller", "cheaper", "bigger"], "answer": 3, "explain": "Bức tranh cao 2 mét → to hơn (bigger) các bức tranh khác. Tính từ ngắn big → bigger (gấp đôi chữ g)."}, {"type": "mcq", "q": "You can see beautiful paintings at the ______.", "options": ["art gallery", "bakery", "post office", "bus stop"], "answer": 0, "explain": "Art gallery = phòng trưng bày nghệ thuật — nơi xem tranh đẹp."}, {"type": "mcq", "q": "Why is the painting 'very interesting' for Detective Quốc?", "options": ["Because it is very old", "Because Miss Linh painted it", "Because it shows a park — maybe Bibo's favourite place!", "Because it is the smallest painting"], "answer": 2, "explain": "Suy luận thám tử: bức tranh vẽ CÔNG VIÊN — có thể đó chính là nơi Bibo thích nhất và đang ở đó!"}, {"type": "mcq", "q": "Miss Linh whispers to Quốc because the art gallery is ______.", "options": ["crowded", "busy", "noisy", "quiet"], "answer": 3, "explain": "Whisper = thì thầm. Người ta nói khẽ vì phòng tranh rất yên tĩnh (quiet)."}]}, {"n": 8, "unit": "Clue 8 · At the Cathedral & the Bookshop", "emoji": "⛪", "passage": "🔎 CLUE 8 — THE CATHEDRAL AND THE BOOKSHOP. The cathedral is the tallest building in the neighbourhood. It stands opposite the square, next to a small bookshop. Two more witnesses are waiting for Detective Quốc: Father Minh, who works at the cathedral, and Ms Vy, the bookshop owner. Listen carefully — every word is a clue!", "qs": [{"type": "mcq", "listen": "I work at the cathedral. This morning, I heard the big bells, and then I saw a little brown dog. He was afraid of the bells, so he ran into the bookshop next door.", "q": "🎧 Listen to Witness 1 (Father Minh). Why did Bibo run into the bookshop?", "options": ["He wanted to read a book", "He was afraid of the bells", "He was very hungry", "He loved the bookshop owner"], "answer": 1, "explain": "Cha Minh kể: 'He was afraid of the bells' — Bibo sợ tiếng chuông nhà thờ nên chạy trốn vào hiệu sách."}, {"type": "mcq", "listen": "I am Vy, the bookshop owner. The little dog was very tired. He slept between two big books about animals. Then a schoolboy came in, and the dog followed him out of the door.", "q": "🎧 Listen to Witness 2 (Ms Vy). Where did Bibo sleep in the bookshop?", "options": ["On the bookshop desk", "Under a chair near the door", "Between two big books", "Behind the tallest bookshelf"], "answer": 2, "explain": "'He slept between two big books about animals' — Bibo ngủ giữa hai cuốn sách to về động vật."}, {"type": "mcq", "listen": "The schoolboy walks to the bus stop every morning. The bus stop is opposite my bookshop, near the river. I think the little dog followed the boy there.", "q": "🎧 Listen to Witness 2 again. Where is the bus stop?", "options": ["Opposite the bookshop, near the river", "Next to the library", "Behind the market", "In the middle of the square"], "answer": 0, "explain": "Cô Vy nói: 'The bus stop is opposite my bookshop, near the river' — bến xe buýt đối diện hiệu sách, gần con sông."}, {"type": "mcq", "q": "The cathedral is ______ than all the other buildings in the neighbourhood.", "options": ["more tall", "tall", "the tallest", "taller"], "answer": 3, "explain": "Câu có 'than' phải dùng so sánh hơn → taller. 'The tallest' là so sánh nhất, không đi với 'than' ở đây."}, {"type": "gap", "q": "The cathedral stands ______ the square, so people can see it from the fountain.", "answer": "opposite", "accept": ["opposite"], "explain": "Đoạn văn: 'It stands opposite the square' — nhà thờ đứng ĐỐI DIỆN quảng trường."}, {"type": "mcq", "q": "______ there a bookshop next to the cathedral? — Yes, there is.", "options": ["Are", "Is", "Do", "Does"], "answer": 1, "explain": "Danh từ số ít 'a bookshop', câu trả lời 'Yes, there is' → Is there...?"}, {"type": "mcq", "q": "The bookshop is ______ the cathedral and the little café.", "options": ["between", "opposite", "under", "in front of"], "answer": 0, "explain": "Nằm giữa HAI nơi (the cathedral AND the little café) → between."}, {"type": "mcq", "q": "People go to the ______ to pray and listen to the beautiful bells.", "options": ["bakery", "post office", "art gallery", "cathedral"], "answer": 3, "explain": "Cathedral = nhà thờ lớn — nơi mọi người cầu nguyện và nghe tiếng chuông."}, {"type": "mcq", "q": "Who works at the cathedral?", "options": ["Ms Vy", "Mr Bao", "Mrs Lan", "Father Minh"], "answer": 3, "explain": "Cha Minh (Father Minh) làm việc ở nhà thờ. Ms Vy là chủ hiệu sách, Mr Bao làm bánh, Mrs Lan đưa thư."}, {"type": "mcq", "q": "The bookshop is ______ than the cathedral, but it is quieter and cosier.", "options": ["bigger", "taller", "smaller", "noisier"], "answer": 2, "explain": "Hiệu sách nhỏ hơn nhà thờ rất nhiều → smaller. Nhà thờ là tòa nhà cao nhất khu phố mà!"}]}, {"n": 9, "unit": "Clue 9 · At the Bus Stop & the River", "emoji": "🚌", "passage": "🔎 CLUE 9 — THE BUS STOP AND THE RIVER. The bus stop is near the river, opposite the bookshop. A schoolboy named Phong is waiting for his bus. He tells Quốc: 'The little dog followed me here! He drank water from the river, then he crossed the small bridge and ran into the green place with the big tree. I know that place — it is quieter and more peaceful than anywhere in town!' Quốc's heart beats fast. One more clue, detective!", "qs": [{"type": "mcq", "q": "Who is Phong?", "options": ["A baker", "A postman", "A train driver", "A schoolboy"], "answer": 3, "explain": "Phong là 'a schoolboy' — một cậu học sinh đang chờ xe buýt."}, {"type": "mcq", "q": "What did Bibo drink at the river?", "options": ["Water from the river", "Coffee", "Milk", "Juice"], "answer": 0, "explain": "'He drank water from the river' — Bibo uống nước sông. Chó thì không uống cà phê đâu nhé!"}, {"type": "mcq", "q": "Bibo crossed ______ to get to the green place.", "options": ["the busy road", "the square", "the small bridge", "the market"], "answer": 2, "explain": "'Then he crossed the small bridge' — Bibo băng qua cây cầu nhỏ."}, {"type": "gap", "q": "Phong is waiting for his ______ at the bus stop.", "answer": "bus", "accept": ["bus"], "explain": "Ở bến xe buýt (bus stop), Phong đang chờ XE BUÝT (bus) của mình."}, {"type": "mcq", "q": "Phong says the green place is ______ than anywhere in town.", "options": ["noisier", "busier", "quieter", "more crowded"], "answer": 2, "explain": "'It is quieter and more peaceful than anywhere in town' — nơi đó yên tĩnh hơn mọi nơi trong thị trấn."}, {"type": "mcq", "q": "______ a river near the bus stop, opposite the bookshop.", "options": ["There are", "Is there", "Are there", "There is"], "answer": 3, "explain": "Câu KỂ về một con sông (danh từ số ít) → There is a river..."}, {"type": "mcq", "q": "From the bus stop, ______ the small bridge and go straight. The green place is on your left!", "options": ["cross", "take", "make", "do"], "answer": 0, "explain": "'Cross the bridge' = băng qua cầu. Qua cầu rồi đi thẳng, nơi xanh mát ở ngay bên trái!"}, {"type": "mcq", "q": "______ there any buses at the bus stop now? — No, there aren't. Phong is still waiting.", "options": ["Is", "Are", "Do", "Does"], "answer": 1, "explain": "'Buses' là danh từ số nhiều, trả lời 'No, there aren't' → Are there...?"}, {"type": "mcq", "q": "Quốc's heart beats fast. This means he is ______.", "options": ["asleep", "tired", "hungry", "excited"], "answer": 3, "explain": "Tim đập nhanh vì HỒI HỘP, PHẤN KHÍCH (excited) — thám tử sắp tìm thấy Bibo rồi!"}, {"type": "mcq", "q": "Phong's words give Quốc a big idea. The green place with the big tree is probably ______.", "options": ["the market", "the park", "the railway station", "the library"], "answer": 1, "explain": "Nơi xanh mát, yên tĩnh, có cây to, lại gần sông — chính là CÔNG VIÊN (the park)! Manh mối cuối cùng đang chờ em ở đó."}]}, {"n": 10, "unit": "Clue 10 · The Final Clue", "emoji": "🐾", "passage": "🔎 CLUE 10 — THE FINAL CLUE. Quốc runs back to the square with nine clues in his notebook. The old woman gives Quốc a small map and winks: 'Follow the paw prints, little detective! Go past the bakery, walk between the bookshop and the flower shop, and cross the small street. Bibo loves that place. It is quiet, green and peaceful, and there is a big tree...' Quốc smiles. He knows the answer now. Do you?", "qs": [{"type": "mcq", "q": "What does the old woman give Quốc?", "options": ["A banana", "A small map", "A red ball", "A library card"], "answer": 1, "explain": "Bà cụ đưa cho Quốc một tấm bản đồ nhỏ: 'The old woman gives Quốc a small map.'"}, {"type": "mcq", "q": "On the way, Quốc goes past ______.", "options": ["the station", "the cathedral", "the market", "the bakery"], "answer": 3, "explain": "'Go past the bakery' — trên đường đi, Quốc đi ngang qua tiệm bánh mì."}, {"type": "mcq", "q": "Quốc walks ______ the bookshop and the flower shop.", "options": ["between", "under", "behind", "opposite"], "answer": 0, "explain": "'Walk between the bookshop and the flower shop' — đi giữa hiệu sách và tiệm hoa → between."}, {"type": "mcq", "q": "The place where Bibo is is ______ than the market, so he loves sleeping there.", "options": ["noisier", "busier", "quieter", "more crowded"], "answer": 2, "explain": "Nơi đó được mô tả là 'quiet, green and peaceful' — yên tĩnh hơn chợ rất nhiều → quieter."}, {"type": "mcq", "q": "______ a big tree in the place where Bibo is?", "options": ["Are there", "Is there", "There are", "There is"], "answer": 1, "explain": "Câu hỏi với danh từ số ít 'a big tree' → Is there...?"}, {"type": "mcq", "q": "The place is ______ than the square, with grass and flowers everywhere.", "options": ["greener", "more green", "greenest", "green"], "answer": 0, "explain": "So sánh hơn của 'green' (tính từ ngắn) → greener. Nơi đó xanh hơn quảng trường, đầy cỏ và hoa."}, {"type": "mcq", "q": "Why does Quốc smile when he reads the map?", "options": ["Because he is tired", "Because he knows where Bibo is now", "Because he likes old maps", "Because he wants a banana"], "answer": 1, "explain": "Quốc mỉm cười vì giờ cậu ĐÃ BIẾT Bibo đang ở đâu rồi. Còn em, thám tử nhí, em có biết không?"}, {"type": "gap", "q": "Look! Bibo is sleeping ______ the big tree. Zzz...", "answer": "under", "accept": ["under"], "explain": "Bibo ngủ DƯỚI gốc cây to → under the big tree."}, {"type": "mcq", "q": "The place where Bibo is is NOT ______.", "options": ["quiet", "peaceful", "noisy", "green"], "answer": 2, "explain": "Đoạn văn mô tả nơi đó 'quiet, green and peaceful' — chỉ có 'noisy' (ồn ào) là KHÔNG đúng."}, {"type": "mcq", "q": "🔍 THE BIG QUESTION: Where is Bibo?", "options": ["At the railway station", "In the library", "At the market", "In the park, under the big tree!"], "answer": 3, "explain": "Chính xác! Nơi yên tĩnh, xanh mát, có cây to chính là CÔNG VIÊN. Bibo đang ngủ ngon dưới gốc cây to. PHÁ ÁN THÀNH CÔNG! 🎉🐶"}]}]};
+var state = {}; // qid -> {chosen:int|'gap-ok'|'gap-wrong', checked:bool, right:bool}
+var checkedCount = 0, score = 0;
+var ALLQ = [];
+DATA.missions.forEach(function(m){ m.qs.forEach(function(q,i){ q.id = 'M'+m.n+'Q'+(i+1); q.mission = m.n; ALLQ.push(q); }); });
+
+function speak(text){
+  try{
+    var u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-GB'; u.rate = 0.92;
+    var vs = speechSynthesis.getVoices().filter(function(v){return v.lang && v.lang.indexOf('en-GB')===0;});
+    if(vs.length) u.voice = vs[0];
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+  }catch(e){}
+}
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+
+function renderFlashcards(){
+  var h = '';
+  DATA.flashcards.forEach(function(c,ci){
+    h += '<div class="fc" onclick="this.classList.toggle(\'flipped\')"><div class="fc-inner">'
+      + '<div class="fc-face fc-front"><div class="em">'+c.emoji+'</div><div class="hint">'+c.unit+' · TAP TO FLIP 👆</div></div>'
+      + '<div class="fc-face fc-back"><div class="w">'+esc(c.word)+'</div><div class="ipa">'+esc(c.ipa)+'</div><div class="vn">'+esc(c.vn)+'</div><div class="ex">“'+esc(c.ex)+'”</div>'
+      + '<button class="speak" data-i="' + ci + '">🔊 Listen</button></div>'
+      + '</div></div>';
+  });
+  document.getElementById('fcGrid').innerHTML = h;
+}
+document.addEventListener('click', function(e){
+  var b = (e.target && e.target.closest) ? e.target.closest('.speak') : null;
+  if(b){ e.stopPropagation(); speak(DATA.flashcards[+b.getAttribute('data-i')].word); }
+});
+document.addEventListener('click', function(e){
+  var b = (e.target && e.target.closest) ? e.target.closest('.listenBtn') : null;
+  if(b){
+    var q = ALLQ.find(function(x){return x.id===b.getAttribute('data-qid');});
+    if(q && q.listen) speak(q.listen);
+  }
+});
+function renderMissions(){
+  var h = '';
+  DATA.missions.forEach(function(m){
+    h += '<div class="mission-head"><div class="ic">'+m.emoji+'</div><div><h2>Mission '+m.n+'</h2><p>'+m.unit+'</p></div></div>';
+    if(m.passage) h += '<div class="clue">'+esc(m.passage)+'</div>';
+    m.qs.forEach(function(q,idx){
+      h += '<div class="card"><div class="q">Câu '+(idx+1)+'. '+esc(q.q)+'</div>';
+      if(q.passage) h += '<div class="passage">'+esc(q.passage)+'</div>';
+      if(q.listen) h += '<button type="button" class="btn small gold listenBtn" data-qid="'+q.id+'">🔊 Nghe nhân chứng nói</button><p class="sub" style="margin:4px 0 8px">Nghe kỹ rồi chọn đáp án đúng. Bấm nút lần nữa để nghe lại nhé!</p>';
+      if(q.type==='mcq'){
+        h += '<div class="opts">';
+        q.options.forEach(function(op,i){
+          h += '<label id="lab_'+q.id+'_'+i+'"><input type="radio" name="'+q.id+'" value="'+i+'"> '+'ABCD'[i]+'. '+esc(op)+'</label>';
+        });
+        h += '</div>';
+      } else {
+        h += '<div class="gaprow"><input type="text" id="gap_'+q.id+'" placeholder="Type your answer here..."></div>';
+      }
+      h += '<button class="btn small teal" onclick="checkQ(\''+q.id+'\')">Check ✓</button>'
+         + '<div class="feedback" id="fb_'+q.id+'"></div>'
+         + '<div class="explain" id="ex_'+q.id+'">💡 '+esc(q.explain)+'</div></div>';
+    });
+  });
+  document.getElementById('missions').innerHTML = h;
+}
+function norm(s){ return (s||'').toLowerCase().trim().replace(/\s+/g,' ').replace(/[.!?]+$/,''); }
+function checkQ(id){
+  var q = ALLQ.find(function(x){return x.id===id;});
+  var fb = document.getElementById('fb_'+id);
+  var wasChecked = state[id] && state[id].checked;
+  var isRight = false, chosen = null;
+  if(q.type==='mcq'){
+    var sel = document.querySelector('input[name="'+id+'"]:checked');
+    if(!sel){ fb.className='feedback no'; fb.textContent='Em chọn một đáp án trước đã nhé! 🙂'; return; }
+    chosen = parseInt(sel.value);
+    isRight = chosen === q.answer;
+    q.options.forEach(function(_,i){
+      var lab = document.getElementById('lab_'+id+'_'+i);
+      lab.classList.remove('correct','wrong');
+      if(i===q.answer) lab.classList.add('correct');
+      else if(i===chosen) lab.classList.add('wrong');
+    });
+  } else {
+    var val = document.getElementById('gap_'+id).value;
+    if(!val.trim()){ fb.className='feedback no'; fb.textContent='Em gõ đáp án vào ô trống trước đã nhé! 🙂'; return; }
+    isRight = q.accept.map(norm).indexOf(norm(val)) >= 0;
+    chosen = isRight ? 'gap-ok' : 'gap-wrong';
+    document.getElementById('gap_'+id).style.borderColor = isRight ? '#1E9E6A' : '#D64545';
+  }
+  if(!wasChecked){ checkedCount++; if(isRight) score++; }
+  else if(state[id].right && !isRight){ score--; }
+  else if(!state[id].right && isRight){ score++; }
+  state[id] = { chosen: chosen, checked: true, right: isRight };
+  fb.className = 'feedback ' + (isRight ? 'ok' : 'no');
+  fb.textContent = isRight ? '✓ Đúng rồi! Giỏi lắm! 🎉' : '✗ Chưa đúng — đáp án đúng đã được tô xanh, đọc giải thích bên dưới nhé.';
+  document.getElementById('ex_'+id).style.display = 'block';
+  document.getElementById('progressLine').textContent = 'Đã kiểm tra: ' + checkedCount + ' / 100 câu 🔍';
+  if(checkedCount === ALLQ.length) showReport();
+}
+function makeCode(){
+  var s = '';
+  ALLQ.forEach(function(q){
+    var st = state[q.id];
+    if(!st || !st.checked) s += '-';
+    else if(q.type==='mcq') s += st.chosen;
+    else s += (st.right ? '4' : '5');
+  });
+  return 'KQD1-' + s;
+}
+function showReport(){
+  var name = document.getElementById('studentName').value.trim() || 'Kiến Quốc';
+  document.getElementById('reportName').textContent = 'Thám tử nhí: ' + name + ' 🔍';
+  document.getElementById('reportScore').textContent = score + ' / 100';
+  var per = '';
+  DATA.missions.forEach(function(m){
+    var sc = 0;
+    m.qs.forEach(function(q){ if(state[q.id] && state[q.id].right) sc++; });
+    per += '<span>Clue '+m.n+': '+sc+'/10</span>';
+  });
+  document.getElementById('reportPer').innerHTML = per;
+  document.getElementById('reportMsg').textContent =
+    score>=90 ? 'PHÁ ÁN XUẤT SẮC! 🏆🔍 Em đã tìm thấy Bibo đang ngủ ngon dưới gốc cây to trong công viên. Bibo vẫy đuôi cảm ơn thám tử nhí Kiến Quốc! 🐶🎉' :
+    score>=70 ? 'Rất giỏi, thám tử nhí! 💪 Em đã thu thập gần đủ manh mối và tìm thấy Bibo rồi. Xem lại vài câu sai là hoàn hảo! 🐾' :
+    score>=45 ? 'Khá tốt! Em đã đi được hơn nửa hành trình tìm Bibo. Đọc lại giải thích các câu sai, ôn flashcards rồi phá án lại nhé! 🔎' :
+                 'Đừng nản nhé, thám tử nhí! Ôn lại flashcards trong Sổ tay thám tử, đọc kỹ từng manh mối rồi thử lại — Bibo đang chờ em đấy! 🐶';
+  document.getElementById('reportCode').textContent = makeCode();
+  document.getElementById('report').style.display = 'block';
+  document.getElementById('report').scrollIntoView({behavior:'smooth'});
+}
+function startGame(){
+  var name = document.getElementById('studentName').value.trim();
+  if(!name){ alert('Em nhập tên thám tử trước khi phá án nhé!'); return; }
+  document.getElementById('startCard').style.display = 'none';
+  document.getElementById('mainArea').style.display = 'block';
+  window.scrollTo(0,0);
+}
+function restoreGame(){
+  var code = document.getElementById('restoreCode').value.trim().toUpperCase();
+  if(code.indexOf('KQD1-') !== 0){ alert('Mã khôi phục chưa đúng — mã bắt đầu bằng KQD1- nhé!'); return; }
+  var digits = code.substring(5);
+  if(digits.length < ALLQ.length){ alert('Mã khôi phục chưa đủ dài, em kiểm tra lại nhé!'); return; }
+  startGame();
+  ALLQ.forEach(function(q, i){
+    var ch = digits[i];
+    if(ch === '-') return;
+    if(q.type==='mcq'){
+      var v = parseInt(ch);
+      if(isNaN(v)) return;
+      var inp = document.querySelector('input[name="'+q.id+'"][value="'+v+'"]');
+      if(inp){ inp.checked = true; checkQ(q.id); }
+    } else {
+      var box = document.getElementById('gap_'+q.id);
+      if(ch === '4'){ box.value = q.answer; checkQ(q.id); }
+      else if(ch === '5'){ box.value = box.value || '...'; if(box.value==='...') box.value='x'; checkQ(q.id); if(state[q.id] && state[q.id].right){ /* safety */ } }
+    }
+  });
+}
+renderFlashcards();
+renderMissions();
+</script>
+</body>
+</html>
